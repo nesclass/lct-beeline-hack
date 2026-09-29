@@ -1,0 +1,1210 @@
+{
+ "id": "normal",
+ "title": "Обычный день",
+ "description": "Штатная нагрузка: людей хватает, почти всё назначается.",
+ "area": "ЮАО",
+ "meta": {
+  "name": "synth-normal",
+  "date": "2026-08-17",
+  "seed": 42,
+  "description": "Синтетический рабочий день, ЮАО Москвы: 12 инженеров, 59 заявок, 3 события. Координаты и адреса синтетические (центроид района + шум)."
+ },
+ "config": {
+  "travel": {
+   "mode": "matrix",
+   "normative_road_min": 20,
+   "detour_factor": 1.3,
+   "speed_kmh": {
+    "car": 25,
+    "bike": 15,
+    "foot": 5,
+    "public": 18
+   },
+   "fixed_min": {
+    "car": 5,
+    "bike": 2,
+    "foot": 0,
+    "public": 10
+   }
+  },
+  "weights": {
+   "P": 10000,
+   "F": 60,
+   "G": 15,
+   "urgent_multiplier": 3
+  },
+  "robustness": {
+   "work_factor": 0.0,
+   "travel_factor": 0.0,
+   "travel_min": 0,
+   "risk": {
+    "eps_grid": [
+     0,
+     0.1,
+     0.2,
+     0.3
+    ],
+    "tol_min": 10,
+    "stress_runs": 200,
+    "stress_cv": 0.15,
+    "late_threshold": 0.5
+   }
+  }
+ },
+ "dictionaries": {
+  "skills": {
+   "local": "Локальные работы",
+   "connect": "Работы на подключение и дозаказы",
+   "emergency": "Аварийные работы"
+  },
+  "transport": {
+   "car": "Автомобиль",
+   "foot": "Пешеход",
+   "bike": "Велосипед",
+   "public": "Общественный транспорт"
+  },
+  "priority": {
+   "normal": "Обычная",
+   "urgent": "Срочная"
+  },
+  "norms": {
+   "connect_base": {
+    "label": "Подключение клиентов Базовая",
+    "road_min": 20,
+    "tech_min": 60,
+    "docs_min": 10
+   },
+   "emergency": {
+    "label": "Аварий на ТКД",
+    "road_min": 20,
+    "tech_min": 80,
+    "docs_min": 0
+   },
+   "equipment": {
+    "label": "Дозаказ оборудования",
+    "road_min": 20,
+    "tech_min": 10,
+    "docs_min": 10
+   },
+   "local_repair": {
+    "label": "Локальная заявка/ремонт у клиента",
+    "road_min": 20,
+    "tech_min": 30,
+    "docs_min": 0
+   }
+  }
+ },
+ "engineers": [
+  {
+   "id": "E01",
+   "name": "Горбанев",
+   "start": {
+    "lat": 55.604,
+    "lon": 37.664,
+    "label": "Офис, ул. Бирюлёвская, д. 1с1"
+   },
+   "shift_start": "09:00",
+   "shift_end": "18:00",
+   "skills": [
+    "local",
+    "connect",
+    "emergency"
+   ],
+   "transport": "car"
+  },
+  {
+   "id": "E02",
+   "name": "Паршин",
+   "start": {
+    "lat": 55.604,
+    "lon": 37.664,
+    "label": "Офис, ул. Бирюлёвская, д. 1с1"
+   },
+   "shift_start": "09:00",
+   "shift_end": "18:00",
+   "skills": [
+    "connect"
+   ],
+   "transport": "car"
+  },
+  {
+   "id": "E03",
+   "name": "Саламатин",
+   "start": {
+    "lat": 55.604,
+    "lon": 37.664,
+    "label": "Офис, ул. Бирюлёвская, д. 1с1"
+   },
+   "shift_start": "12:00",
+   "shift_end": "21:00",
+   "skills": [
+    "local",
+    "connect"
+   ],
+   "transport": "car"
+  },
+  {
+   "id": "E04",
+   "name": "Козырь",
+   "start": {
+    "lat": 55.62,
+    "lon": 37.655,
+    "label": "Дом, Царицыно"
+   },
+   "shift_start": "09:00",
+   "shift_end": "18:00",
+   "skills": [
+    "local"
+   ],
+   "transport": "foot"
+  },
+  {
+   "id": "E05",
+   "name": "Белоновский",
+   "start": {
+    "lat": 55.604,
+    "lon": 37.664,
+    "label": "Офис, ул. Бирюлёвская, д. 1с1"
+   },
+   "shift_start": "13:00",
+   "shift_end": "22:00",
+   "skills": [
+    "local",
+    "connect"
+   ],
+   "transport": "car"
+  },
+  {
+   "id": "E06",
+   "name": "Рыбин",
+   "start": {
+    "lat": 55.61,
+    "lon": 37.748,
+    "label": "Дом, Зябликово"
+   },
+   "shift_start": "11:00",
+   "shift_end": "20:00",
+   "skills": [
+    "local",
+    "connect"
+   ],
+   "transport": "bike"
+  },
+  {
+   "id": "E07",
+   "name": "Андреев",
+   "start": {
+    "lat": 55.604,
+    "lon": 37.664,
+    "label": "Офис, ул. Бирюлёвская, д. 1с1"
+   },
+   "shift_start": "13:00",
+   "shift_end": "22:00",
+   "skills": [
+    "connect",
+    "emergency"
+   ],
+   "transport": "car"
+  },
+  {
+   "id": "E08",
+   "name": "Бузань",
+   "start": {
+    "lat": 55.604,
+    "lon": 37.664,
+    "label": "Офис, ул. Бирюлёвская, д. 1с1"
+   },
+   "shift_start": "13:00",
+   "shift_end": "22:00",
+   "skills": [
+    "connect"
+   ],
+   "transport": "public"
+  },
+  {
+   "id": "E09",
+   "name": "Макаров",
+   "start": {
+    "lat": 55.604,
+    "lon": 37.664,
+    "label": "Офис, ул. Бирюлёвская, д. 1с1"
+   },
+   "shift_start": "09:00",
+   "shift_end": "18:00",
+   "skills": [
+    "local",
+    "emergency"
+   ],
+   "transport": "car"
+  },
+  {
+   "id": "E10",
+   "name": "Царьков",
+   "start": {
+    "lat": 55.638,
+    "lon": 37.765,
+    "label": "Дом, Братеево"
+   },
+   "shift_start": "13:00",
+   "shift_end": "22:00",
+   "skills": [
+    "local"
+   ],
+   "transport": "public"
+  },
+  {
+   "id": "E11",
+   "name": "Демин",
+   "start": {
+    "lat": 55.604,
+    "lon": 37.664,
+    "label": "Офис, ул. Бирюлёвская, д. 1с1"
+   },
+   "shift_start": "13:00",
+   "shift_end": "22:00",
+   "skills": [
+    "local",
+    "connect",
+    "emergency"
+   ],
+   "transport": "car"
+  },
+  {
+   "id": "E12",
+   "name": "Каушнян",
+   "start": {
+    "lat": 55.604,
+    "lon": 37.664,
+    "label": "Офис, ул. Бирюлёвская, д. 1с1"
+   },
+   "shift_start": "10:00",
+   "shift_end": "19:00",
+   "skills": [
+    "emergency"
+   ],
+   "transport": "foot"
+  }
+ ],
+ "requests": [
+  {
+   "id": "R001",
+   "lat": 55.59868,
+   "lon": 37.63809,
+   "address": "Бирюлёво Западное, ул. Харьковская, д. 5",
+   "district": "Бирюлёво Западное",
+   "type": "Низкая скорость",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R002",
+   "lat": 55.61195,
+   "lon": 37.64319,
+   "address": "Царицыно, ул. Луганская, д. 56",
+   "district": "Царицыно",
+   "type": "Заявка на подключение",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R003",
+   "lat": 55.62026,
+   "lon": 37.65459,
+   "address": "Царицыно, ул. Бакинская, д. 23",
+   "district": "Царицыно",
+   "type": "Заявка на подключение",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "20:00",
+   "tw_end": "22:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R004",
+   "lat": 55.64748,
+   "lon": 37.68592,
+   "address": "Москворечье-Сабурово, ул. Кантемировская, д. 41",
+   "district": "Москворечье-Сабурово",
+   "type": "Заявка на подключение",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "12:00",
+   "tw_end": "14:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R005",
+   "lat": 55.62892,
+   "lon": 37.67518,
+   "address": "Москворечье-Сабурово, ул. Кантемировская, д. 45",
+   "district": "Москворечье-Сабурово",
+   "type": "Замена ТВ-приставки",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R006",
+   "lat": 55.62023,
+   "lon": 37.76104,
+   "address": "Зябликово, ул. Кустанайская, д. 53",
+   "district": "Зябликово",
+   "type": "Замена роутера",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R007",
+   "lat": 55.61143,
+   "lon": 37.64844,
+   "address": "Царицыно, ул. Бакинская, д. 14",
+   "district": "Царицыно",
+   "type": "Дозаказ оборудования",
+   "skill": "connect",
+   "work_type": "equipment",
+   "duration_min": 20,
+   "tw_start": "20:00",
+   "tw_end": "22:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R008",
+   "lat": 55.64595,
+   "lon": 37.76035,
+   "address": "Братеево, ул. Ключевая, д. 9",
+   "district": "Братеево",
+   "type": "Переключение на Гбит/с",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "20:00",
+   "tw_end": "22:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R009",
+   "lat": 55.61631,
+   "lon": 37.71538,
+   "address": "Орехово-Борисово Северное, ул. Ясеневая, д. 26",
+   "district": "Орехово-Борисово Северное",
+   "type": "Низкая скорость",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R010",
+   "lat": 55.62184,
+   "lon": 37.72223,
+   "address": "Орехово-Борисово Северное, ул. Шипиловская, д. 10",
+   "district": "Орехово-Борисово Северное",
+   "type": "Обрыв магистрали",
+   "skill": "emergency",
+   "work_type": "emergency",
+   "duration_min": 80,
+   "tw_start": "10:00",
+   "tw_end": "22:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R011",
+   "lat": 55.63413,
+   "lon": 37.74454,
+   "address": "Братеево, ул. Ключевая, д. 39",
+   "district": "Братеево",
+   "type": "Работа с кабелем",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "12:00",
+   "tw_end": "14:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R012",
+   "lat": 55.60131,
+   "lon": 37.61443,
+   "address": "Чертаново Южное, ул. Россошанская, д. 44",
+   "district": "Чертаново Южное",
+   "type": "Нет линка",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R013",
+   "lat": 55.59089,
+   "lon": 37.66567,
+   "address": "Бирюлёво Восточное, ул. Загорьевская, д. 22",
+   "district": "Бирюлёво Восточное",
+   "type": "Замена роутера",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "18:00",
+   "tw_end": "20:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R014",
+   "lat": 55.61589,
+   "lon": 37.67815,
+   "address": "Царицыно, ул. Бакинская, д. 33",
+   "district": "Царицыно",
+   "type": "Нет линка",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "18:00",
+   "tw_end": "20:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R015",
+   "lat": 55.58055,
+   "lon": 37.68001,
+   "address": "Бирюлёво Восточное, ул. Загорьевская, д. 33",
+   "district": "Бирюлёво Восточное",
+   "type": "Нет линка",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R016",
+   "lat": 55.6423,
+   "lon": 37.76358,
+   "address": "Братеево, ул. Алма-Атинская, д. 59",
+   "district": "Братеево",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "20:00",
+   "tw_end": "22:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R017",
+   "lat": 55.60547,
+   "lon": 37.67716,
+   "address": "Царицыно, ул. Бакинская, д. 16",
+   "district": "Царицыно",
+   "type": "Дозаказ оборудования",
+   "skill": "connect",
+   "work_type": "equipment",
+   "duration_min": 20,
+   "tw_start": "10:00",
+   "tw_end": "12:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R018",
+   "lat": 55.60706,
+   "lon": 37.65944,
+   "address": "Царицыно, Кавказский б-р, д. 49",
+   "district": "Царицыно",
+   "type": "Авария на узле",
+   "skill": "emergency",
+   "work_type": "emergency",
+   "duration_min": 80,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R019",
+   "lat": 55.61583,
+   "lon": 37.76787,
+   "address": "Зябликово, ул. Кустанайская, д. 17",
+   "district": "Зябликово",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "18:00",
+   "tw_end": "20:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R020",
+   "lat": 55.62314,
+   "lon": 37.76716,
+   "address": "Зябликово, ул. Мусы Джалиля, д. 45",
+   "district": "Зябликово",
+   "type": "Низкая скорость",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "10:00",
+   "tw_end": "12:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R021",
+   "lat": 55.64888,
+   "lon": 37.686,
+   "address": "Москворечье-Сабурово, Каширское ш., д. 58",
+   "district": "Москворечье-Сабурово",
+   "type": "Дозаказ оборудования",
+   "skill": "connect",
+   "work_type": "equipment",
+   "duration_min": 20,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R022",
+   "lat": 55.60539,
+   "lon": 37.74352,
+   "address": "Зябликово, ул. Мусы Джалиля, д. 36",
+   "district": "Зябликово",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "12:00",
+   "tw_end": "14:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R023",
+   "lat": 55.6267,
+   "lon": 37.68524,
+   "address": "Москворечье-Сабурово, Пролетарский пр-т, д. 5",
+   "district": "Москворечье-Сабурово",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "18:00",
+   "tw_end": "20:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R024",
+   "lat": 55.58371,
+   "lon": 37.64176,
+   "address": "Бирюлёво Западное, Булатниковский пр-д, д. 35",
+   "district": "Бирюлёво Западное",
+   "type": "Авария на узле",
+   "skill": "emergency",
+   "work_type": "emergency",
+   "duration_min": 80,
+   "tw_start": "10:00",
+   "tw_end": "22:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R025",
+   "lat": 55.61634,
+   "lon": 37.67138,
+   "address": "Царицыно, ул. Севанская, д. 13",
+   "district": "Царицыно",
+   "type": "Рост ошибок на порту",
+   "skill": "emergency",
+   "work_type": "emergency",
+   "duration_min": 80,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R026",
+   "lat": 55.6135,
+   "lon": 37.65644,
+   "address": "Царицыно, Кавказский б-р, д. 44",
+   "district": "Царицыно",
+   "type": "Замена роутера",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R027",
+   "lat": 55.62545,
+   "lon": 37.77113,
+   "address": "Братеево, ул. Братеевская, д. 16",
+   "district": "Братеево",
+   "type": "Замена роутера",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "10:00",
+   "tw_end": "12:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R028",
+   "lat": 55.62836,
+   "lon": 37.66734,
+   "address": "Москворечье-Сабурово, Каширское ш., д. 16",
+   "district": "Москворечье-Сабурово",
+   "type": "Нет линка",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R029",
+   "lat": 55.59739,
+   "lon": 37.64924,
+   "address": "Бирюлёво Западное, Булатниковский пр-д, д. 4",
+   "district": "Бирюлёво Западное",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "20:00",
+   "tw_end": "22:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R030",
+   "lat": 55.62435,
+   "lon": 37.74573,
+   "address": "Братеево, ул. Братеевская, д. 11",
+   "district": "Братеево",
+   "type": "Нет линка",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R031",
+   "lat": 55.61475,
+   "lon": 37.7461,
+   "address": "Орехово-Борисово Южное, Гурьевский пр-д, д. 25",
+   "district": "Орехово-Борисово Южное",
+   "type": "Нет линка",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R032",
+   "lat": 55.62724,
+   "lon": 37.67141,
+   "address": "Царицыно, ул. Бакинская, д. 28",
+   "district": "Царицыно",
+   "type": "Переключение на Гбит/с",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R033",
+   "lat": 55.6428,
+   "lon": 37.76847,
+   "address": "Братеево, ул. Ключевая, д. 10",
+   "district": "Братеево",
+   "type": "Замена ТВ-приставки",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R034",
+   "lat": 55.6264,
+   "lon": 37.68943,
+   "address": "Москворечье-Сабурово, Пролетарский пр-т, д. 48",
+   "district": "Москворечье-Сабурово",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "12:00",
+   "tw_end": "14:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R035",
+   "lat": 55.62144,
+   "lon": 37.72878,
+   "address": "Орехово-Борисово Северное, ул. Ясеневая, д. 11",
+   "district": "Орехово-Борисово Северное",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R036",
+   "lat": 55.62543,
+   "lon": 37.64274,
+   "address": "Царицыно, Кавказский б-р, д. 44",
+   "district": "Царицыно",
+   "type": "Нет линка",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R037",
+   "lat": 55.6006,
+   "lon": 37.63779,
+   "address": "Бирюлёво Западное, ул. Харьковская, д. 39",
+   "district": "Бирюлёво Западное",
+   "type": "Нет линка",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "18:00",
+   "tw_end": "20:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R038",
+   "lat": 55.62078,
+   "lon": 37.66261,
+   "address": "Царицыно, ул. Бакинская, д. 60",
+   "district": "Царицыно",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "12:00",
+   "tw_end": "14:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R039",
+   "lat": 55.61754,
+   "lon": 37.70262,
+   "address": "Орехово-Борисово Северное, ул. Шипиловская, д. 43",
+   "district": "Орехово-Борисово Северное",
+   "type": "Замена роутера",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "18:00",
+   "tw_end": "20:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R040",
+   "lat": 55.6463,
+   "lon": 37.77943,
+   "address": "Братеево, ул. Братеевская, д. 30",
+   "district": "Братеево",
+   "type": "Нет линка",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "20:00",
+   "tw_end": "22:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R041",
+   "lat": 55.6264,
+   "lon": 37.76351,
+   "address": "Братеево, ул. Алма-Атинская, д. 17",
+   "district": "Братеево",
+   "type": "Низкая скорость",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "10:00",
+   "tw_end": "12:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R042",
+   "lat": 55.60665,
+   "lon": 37.64977,
+   "address": "Царицыно, ул. Бакинская, д. 11",
+   "district": "Царицыно",
+   "type": "Дозаказ оборудования",
+   "skill": "connect",
+   "work_type": "equipment",
+   "duration_min": 20,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R043",
+   "lat": 55.60126,
+   "lon": 37.74935,
+   "address": "Орехово-Борисово Южное, ул. Воронежская, д. 34",
+   "district": "Орехово-Борисово Южное",
+   "type": "Нет линка",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R044",
+   "lat": 55.62092,
+   "lon": 37.67756,
+   "address": "Царицыно, ул. Луганская, д. 17",
+   "district": "Царицыно",
+   "type": "Авария на узле",
+   "skill": "emergency",
+   "work_type": "emergency",
+   "duration_min": 80,
+   "tw_start": "10:00",
+   "tw_end": "22:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R045",
+   "lat": 55.61828,
+   "lon": 37.65089,
+   "address": "Царицыно, ул. Луганская, д. 46",
+   "district": "Царицыно",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R046",
+   "lat": 55.63047,
+   "lon": 37.71222,
+   "address": "Орехово-Борисово Северное, ул. Домодедовская, д. 58",
+   "district": "Орехово-Борисово Северное",
+   "type": "Замена роутера",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "18:00",
+   "tw_end": "20:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R047",
+   "lat": 55.59322,
+   "lon": 37.64817,
+   "address": "Бирюлёво Западное, Булатниковский пр-д, д. 1",
+   "district": "Бирюлёво Западное",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "10:00",
+   "tw_end": "12:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R048",
+   "lat": 55.63352,
+   "lon": 37.69846,
+   "address": "Орехово-Борисово Северное, ул. Домодедовская, д. 36",
+   "district": "Орехово-Борисово Северное",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "12:00",
+   "tw_end": "14:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R049",
+   "lat": 55.58068,
+   "lon": 37.6928,
+   "address": "Бирюлёво Восточное, ул. Загорьевская, д. 58",
+   "district": "Бирюлёво Восточное",
+   "type": "Низкая скорость",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "12:00",
+   "tw_end": "14:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R050",
+   "lat": 55.61386,
+   "lon": 37.6621,
+   "address": "Царицыно, ул. Севанская, д. 9",
+   "district": "Царицыно",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "12:00",
+   "tw_end": "14:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R051",
+   "lat": 55.62739,
+   "lon": 37.67889,
+   "address": "Царицыно, Кавказский б-р, д. 58",
+   "district": "Царицыно",
+   "type": "Переключение на Гбит/с",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R052",
+   "lat": 55.62601,
+   "lon": 37.70615,
+   "address": "Орехово-Борисово Северное, ул. Ясеневая, д. 57",
+   "district": "Орехово-Борисово Северное",
+   "type": "Замена роутера",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "18:00",
+   "tw_end": "20:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R053",
+   "lat": 55.60022,
+   "lon": 37.62447,
+   "address": "Бирюлёво Западное, Булатниковский пр-д, д. 52",
+   "district": "Бирюлёво Западное",
+   "type": "Обрыв магистрали",
+   "skill": "emergency",
+   "work_type": "emergency",
+   "duration_min": 80,
+   "tw_start": "10:00",
+   "tw_end": "12:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R054",
+   "lat": 55.59568,
+   "lon": 37.66829,
+   "address": "Бирюлёво Восточное, ул. Педагогическая, д. 52",
+   "district": "Бирюлёво Восточное",
+   "type": "Авария на узле",
+   "skill": "emergency",
+   "work_type": "emergency",
+   "duration_min": 80,
+   "tw_start": "10:00",
+   "tw_end": "22:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R055",
+   "lat": 55.62996,
+   "lon": 37.74837,
+   "address": "Братеево, ул. Алма-Атинская, д. 7",
+   "district": "Братеево",
+   "type": "Замена ТВ-приставки",
+   "skill": "local",
+   "work_type": "local_repair",
+   "duration_min": 30,
+   "tw_start": "16:00",
+   "tw_end": "18:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R056",
+   "lat": 55.62,
+   "lon": 37.656,
+   "address": "Царицыно, музей-заповедник, павильон 3",
+   "district": "Царицыно",
+   "type": "Подключение (пешеходная зона)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "12:00",
+   "tw_end": "14:00",
+   "priority": "normal",
+   "required_transport": "foot"
+  },
+  {
+   "id": "R057",
+   "lat": 55.61,
+   "lon": 37.756,
+   "address": "Зябликово, Ореховый б-р, д. 45",
+   "district": "Зябликово",
+   "type": "Обрыв магистрали",
+   "skill": "emergency",
+   "work_type": "emergency",
+   "duration_min": 80,
+   "tw_start": "21:00",
+   "tw_end": "22:00",
+   "priority": "normal",
+   "required_transport": "car"
+  },
+  {
+   "id": "R058",
+   "lat": 55.62493,
+   "lon": 37.76083,
+   "address": "Братеево, ул. Братеевская, д. 53",
+   "district": "Братеево",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": null
+  },
+  {
+   "id": "R059",
+   "lat": 55.64369,
+   "lon": 37.77685,
+   "address": "Братеево, ул. Братеевская, д. 2",
+   "district": "Братеево",
+   "type": "Подключение (конвергенция)",
+   "skill": "connect",
+   "work_type": "connect_base",
+   "duration_min": 70,
+   "tw_start": "14:00",
+   "tw_end": "16:00",
+   "priority": "normal",
+   "required_transport": null
+  }
+ ],
+ "events": [
+  {
+   "id": "EV1",
+   "type": "urgent_request",
+   "time": "13:30",
+   "request": {
+    "id": "R901",
+    "lat": 55.623,
+    "lon": 37.668,
+    "address": "Царицыно, ул. Луганская, д. 10",
+    "district": "Царицыно",
+    "type": "Авария на узле",
+    "skill": "emergency",
+    "work_type": "emergency",
+    "duration_min": 80,
+    "tw_start": "13:30",
+    "tw_end": "15:30",
+    "priority": "urgent",
+    "required_transport": "car"
+   }
+  },
+  {
+   "id": "EV2",
+   "type": "cancel_request",
+   "time": "12:15",
+   "request_id": "R002"
+  },
+  {
+   "id": "EV3",
+   "type": "engineer_unavailable",
+   "time": "14:00",
+   "engineer_id": "E01",
+   "finish_current": true
+  }
+ ]
+}

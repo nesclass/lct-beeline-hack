@@ -1,0 +1,14 @@
+{
+  "name": "dispatcher-web",
+  "private": true,
+  "type": "module",
+  "scripts": { "dev": "vite", "build": "vite build", "test": "vitest run", "shot": "node scripts/shot.mjs" },
+  "dependencies": { "leaflet": "^1.9.4" },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "playwright-core": "^1.63.0",
+    "svelte": "^5.57.1",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  }
+}

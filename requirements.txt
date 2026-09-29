@@ -1,0 +1,7 @@
+ortools>=9.10
+litellm[proxy]==1.101.0   # прокси и клиент одной версии; новее - проверять ассистента
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pytest>=8
+python-dotenv>=1.0
+requests>=2.31

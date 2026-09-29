@@ -1,0 +1,61 @@
+@startuml components
+' Слои сервера. Стрелка - "вызывает". Роутеры тонкие: разбирают запрос и зовут сервис.
+skinparam defaultFontName "Helvetica"
+skinparam shadowing false
+skinparam roundCorner 8
+skinparam componentStyle rectangle
+skinparam ArrowColor #555555
+skinparam nodesep 40
+skinparam ranksep 50
+skinparam package {
+  BackgroundColor #FCFCFC
+  BorderColor #999999
+}
+
+[app/routers\n11 модулей, /api/*] as routers
+
+package "app - сервисы" {
+  [planning.py\nбазовый план,\nперепланирование,\nпринять / откатить] as planning
+  [variants.py\nбазовый + 3 запаса] as variants
+  [whatif.py\nпредпросмотры] as whatif
+  [assistant.py\nмодель или шаблон] as assistant
+  [analytics.py\nсравнение с базовым] as analytics
+}
+
+package "app - данные" {
+  [store.py\nSQLite, весь SQL здесь] as store
+  [geo\nOSRM -> по прямой,\nкэш матриц] as geo
+}
+
+package "planner - ядро" {
+  [replan.py\nснимок, события, diff] as replan
+  [engines\nbaseline, greedy, ortools] as engines
+  [explain.py\nprobe, why_assigned,\nwhy_unassigned] as explain
+  [risk.py\nдопуск, стресс-тест] as risk
+  [routing.py\nпрокрутка маршрута\nпо времени] as routing
+  [llm.py, reasoning.py\nфакты для модели] as llm
+}
+
+routers --> planning
+routers --> variants
+routers --> whatif
+routers --> assistant
+routers --> analytics
+routers --> store
+
+variants --> planning
+analytics --> planning
+planning --> store
+planning --> geo
+planning --> replan
+planning --> engines
+planning --> risk
+whatif --> replan
+whatif --> explain
+assistant --> llm
+
+replan --> engines
+engines --> routing
+explain --> routing
+risk --> routing
+@enduml

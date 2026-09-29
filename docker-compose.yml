@@ -1,0 +1,65 @@
+# Весь прототип одной командой:  docker compose up -d  ->  http://localhost:8001
+# Первый запуск скачивает карту и готовит граф дорог (несколько минут), дальше - секунды.
+
+x-osrm: &osrm
+  image: ghcr.io/project-osrm/osrm-backend:v6.0.0
+  volumes:
+    - ./data/osrm:/data
+
+services:
+  osrm-init:
+    <<: *osrm
+    volumes:
+      - ./data/osrm:/data
+      - ./docker/osrm-init.sh:/osrm-init.sh:ro
+    entrypoint: ["/bin/sh", "/osrm-init.sh"]
+    restart: "no"
+
+  osrm:
+    <<: *osrm
+    # таблица по умолчанию - до 100 точек; в загруженном дне их бывает больше
+    command: osrm-routed --algorithm mld --max-table-size 1000 /data/moscow.osrm
+    depends_on:
+      osrm-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:5000/route/v1/driving/37.6176,55.7558;37.6200,55.7600?overview=false"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+  # прокси к модели из того же образа: версия LiteLLM у прокси и приложения всегда одна
+  litellm:
+    build: .
+    image: lct-dispatcher
+    command: ["litellm", "--config", "litellm_config.yaml", "--port", "4000"]
+    env_file: .env
+    volumes:
+      - ./litellm_config.yaml:/srv/litellm_config.yaml:ro   # сменить модель - поправить конфиг и restart
+    extra_hosts:
+      - host.docker.internal:host-gateway   # локальная модель (Ollama, vLLM) на самом сервере
+    restart: unless-stopped
+
+  app:
+    build: .
+    image: lct-dispatcher
+    ports:
+      - "${APP_PORT:-8001}:8001"
+    env_file: .env
+    environment:
+      OSRM_URL: http://osrm:5000
+      LITELLM_BASE_URL: http://litellm:4000
+    volumes:
+      - app-out:/srv/out
+      - geo-cache:/srv/data/geo
+    depends_on:
+      osrm:
+        condition: service_healthy
+      litellm:
+        condition: service_started
+    restart: unless-stopped
+
+volumes:
+  app-out:
+  geo-cache:

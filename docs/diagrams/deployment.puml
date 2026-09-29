@@ -1,0 +1,65 @@
+@startuml deployment
+' Как прототип разворачивается: рабочее место диспетчера и виртуальный сервер с сервисами Docker Compose.
+skinparam defaultFontName "Helvetica"
+skinparam shadowing false
+skinparam roundCorner 8
+skinparam componentStyle rectangle
+skinparam ArrowColor #555555
+skinparam node {
+  BackgroundColor #FAFAFA
+  BorderColor #888888
+}
+skinparam database {
+  BackgroundColor #FFF8D6
+  BorderColor #B59A00
+}
+
+actor "Диспетчер" as user
+
+node "Рабочее место диспетчера" {
+  node "Браузер" as browser {
+    component "SPA на Svelte\n(Leaflet, диаграмма Ганта)" as spa
+  }
+}
+
+node "Виртуальный сервер" {
+
+  node "Docker Compose" {
+
+    node "app\n:8001 наружу" as app {
+      component "FastAPI\n/api/*" as api
+      component "Раздача web/dist" as static
+      component "planner\n(greedy, OR-Tools)" as planner
+    }
+
+    node "osrm" as osrm {
+      component "osrm-routed\nMLD, профиль car" as routed
+    }
+
+    node "osrm-init\nодин раз" as init
+
+    node "litellm\nпрокси к модели" as proxy
+
+    database "том app-out\nсессии, планы, события" as db
+    database "том geo-cache\nкэш матриц OSRM" as geocache
+  }
+
+  database "data/osrm/\nграф дорог Москвы, 281 МБ" as graph
+}
+
+cloud "Языковая модель\n(любой провайдер LiteLLM:\nOpenAI, GigaChat, YandexGPT,\nлокальная Ollama/vLLM)" as llm
+cloud "Тайлы OpenStreetMap" as tiles
+
+user --> spa
+spa --> static : HTML, JS
+spa --> api : JSON
+spa ..> tiles : подложка карты
+api --> planner
+api --> db
+api --> routed : /table, /route
+api --> geocache
+routed --> graph
+init --> graph : готовит
+api ..> proxy : ассистент\n(необязательно)
+proxy ..> llm
+@enduml

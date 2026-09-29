@@ -1,0 +1,59 @@
+# LiteLLM proxy: единая точка входа к языковой модели для ассистента диспетчера.
+# Запуск:  сервис litellm в docker-compose.yml (вручную: litellm --config litellm_config.yaml --port 4000)
+# Клиент:  planner/llm.py ходит сюда через litellm.completion(model="litellm_proxy/dispatcher")
+#
+# Приложение знает только имя «dispatcher» и не знает, кто за ним стоит. Провайдер выбирается здесь:
+# OpenAI - просто то, чем пользовалась команда. На его месте может быть локальная модель, отечественное
+# облако или любой из провайдеров LiteLLM (https://docs.litellm.ai/docs/providers). Чтобы сменить,
+# закомментируйте текущий блок «dispatcher», раскомментируйте нужный, положите его ключ в .env и
+# выполните docker compose restart litellm. Код приложения не меняется.
+#
+# Требование к модели одно: вызов инструментов (function calling). Без него ассистент отвечает
+# только текстом и не может заглянуть в план.
+
+model_list:
+  # --- сейчас: облачная модель OpenAI -------------------------------------------------------------
+  - model_name: dispatcher            # имя, которое видит приложение ($LLM_MODEL)
+    litellm_params:
+      model: openai/gpt-6-luna
+      api_key: os.environ/OPENAI_API_KEY
+      reasoning_effort: low           # рассуждающая модель: малое усилие - быстрый ответ диспетчеру
+
+  # --- локальная модель через Ollama на том же сервере (данные не покидают контур) ----------------
+  # - model_name: dispatcher
+  #   litellm_params:
+  #     model: ollama_chat/qwen3:14b
+  #     api_base: http://host.docker.internal:11434
+
+  # --- локальная модель через vLLM или любой OpenAI-совместимый сервер ---------------------------
+  # - model_name: dispatcher
+  #   litellm_params:
+  #     model: hosted_vllm/Qwen/Qwen3-32B
+  #     api_base: http://host.docker.internal:8000/v1
+
+  # --- GigaChat (Сбер) -----------------------------------------------------------------------------
+  # - model_name: dispatcher
+  #   litellm_params:
+  #     model: gigachat/GigaChat-2-Max
+  #     api_key: os.environ/GIGACHAT_CREDENTIALS
+
+  # --- YandexGPT (Yandex Cloud, OpenAI-совместимый API) --------------------------------------------
+  # - model_name: dispatcher
+  #   litellm_params:
+  #     model: openai/gpt://<folder_id>/yandexgpt/latest
+  #     api_base: https://llm.api.cloud.yandex.net/v1
+  #     api_key: os.environ/YANDEX_API_KEY
+
+  # --- другие облака: Anthropic, Gemini, Mistral, DeepSeek и т.д. ----------------------------------
+  # - model_name: dispatcher
+  #   litellm_params:
+  #     model: anthropic/claude-sonnet-5
+  #     api_key: os.environ/ANTHROPIC_API_KEY
+
+litellm_settings:
+  drop_params: true                   # параметры, которых провайдер не знает, молча отбрасывать, а не падать
+  num_retries: 2
+  request_timeout: 60
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY   # ключ, которым авторизуется приложение (LITELLM_API_KEY)

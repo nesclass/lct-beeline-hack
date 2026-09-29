@@ -1,0 +1,12 @@
+.env
+out/
+__pycache__/
+.pytest_cache/
+.DS_Store
+data/geo/
+web/node_modules/
+web/dist/
+.superpowers/
+backups/
+.claude/
+data/osrm/
